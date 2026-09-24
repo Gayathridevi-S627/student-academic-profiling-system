@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Academic Details | Student Profiling System</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f6f8fc;
+            color: #1f2937;
+            min-height: 100vh;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            height: 72px;
+            background: rgba(255, 255, 255, 0.97);
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 6%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 20px;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #4f46e5, #2563eb);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-name {
+            font-size: 14px;
+            color: #4b5563;
+        }
+
+        .logout-btn {
+            border: none;
+            background: #eef2ff;
+            color: #4338ca;
+            padding: 10px 16px;
+            border-radius: 9px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .logout-btn:hover {
+            background: #e0e7ff;
+        }
+
+        /* MAIN */
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 35px auto 60px;
+        }
+
+        .page-header {
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 {
+            font-size: 30px;
+            color: #111827;
+            margin-bottom: 7px;
+        }
+
+        .page-header p {
+            color: #6b7280;
+            font-size: 15px;
+        }
+
+        /* INFO CARD */
+        .info-card {
+            background: linear-gradient(
+                135deg,
+                #eef2ff,
+                #eff6ff
+            );
+            border: 1px solid #dbeafe;
+            border-radius: 18px;
+            padding: 23px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .info-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            background: white;
+            color: #4f46e5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .info-card h2 {
+            font-size: 18px;
+            color: #111827;
+            margin-bottom: 4px;
+        }
+
+        .info-card p {
+            color: #6b7280;
+            font-size: 13px;
+        }
+
+        /* CARD */
+        .card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 22px;
+            box-shadow: 0 5px 18px rgba(15, 23, 42, 0.04);
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 5px;
+        }
+
+        .card-description {
+            font-size: 13px;
+            color: #6b7280;
+            margin-bottom: 20px;
+        }
+
+        /* SEMESTER ROW */
+        .semester-row {
+            display: grid;
+            grid-template-columns: 1.1fr 1fr 1fr 1fr 1.5fr auto;
+            gap: 12px;
+            align-items: end;
+            padding: 18px;
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            margin-bottom: 12px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #4b5563;
+            margin-bottom: 6px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            padding: 10px 11px;
+            font-size: 13px;
+            color: #111827;
+            background: white;
+            outline: none;
+            font-family: inherit;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.10);
+        }
+
+        .remove-btn {
+            border: none;
+            background: #fee2e2;
+            color: #b91c1c;
+            padding: 10px 13px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .remove-btn:hover {
+            background: #fecaca;
+        }
+
+        /* EMPTY */
+        .empty-state {
+            text-align: center;
+            padding: 35px 20px;
+            border: 1px dashed #d1d5db;
+            border-radius: 12px;
+            color: #6b7280;
+            margin-bottom: 18px;
+        }
+
+        .empty-state .empty-icon {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .empty-state h3 {
+            color: #374151;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .empty-state p {
+            font-size: 13px;
+        }
+
+        /* BUTTONS */
+        .add-btn {
+            border: 1px solid #c7d2fe;
+            background: #eef2ff;
+            color: #4338ca;
+            padding: 11px 17px;
+            border-radius: 9px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .add-btn:hover {
+            background: #e0e7ff;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .btn {
+            padding: 12px 22px;
+            border-radius: 9px;
+            border: none;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        .btn-secondary:hover {
+            background: #e5e7eb;
+        }
+
+        .btn-primary {
+            background: linear-gradient(
+                135deg,
+                #4f46e5,
+                #2563eb
+            );
+            color: white;
+            box-shadow: 0 5px 12px rgba(79, 70, 229, 0.20);
+        }
+
+        .btn-primary:hover {
+            opacity: 0.93;
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* MESSAGE */
+        .message {
+            display: none;
+            padding: 12px 15px;
+            border-radius: 9px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .message.success {
+            display: block;
+            background: #ecfdf5;
+            color: #047857;
+            border: 1px solid #a7f3d0;
+        }
+
+        .message.error {
+            display: block;
+            background: #fef2f2;
+            color: #b91c1c;
+            border: 1px solid #fecaca;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 950px) {
+            .semester-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 650px) {
+            .navbar {
+                padding: 0 4%;
+            }
+
+            .nav-name {
+                display: none;
+            }
+
+            .container {
+                width: 92%;
+                margin-top: 25px;
+            }
+
+            .page-header h1 {
+                font-size: 25px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .semester-row {
+                grid-template-columns: 1fr;
+            }
+
+            .actions {
+                flex-direction: column-reverse;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .info-card {
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+
+        <div class="logo">
+            <div class="logo-icon">SP</div>
+            <span>Student Profiling</span>
+        </div>
+
+        <div class="nav-right">
+
+            <span
+                class="nav-name"
+                id="navName"
+            >
+                Student
+            </span>
+
+            <button
+                class="logout-btn"
+                onclick="logout()"
+            >
+                Logout
+            </button>
+
+        </div>
+
+    </nav>
+
+
+    <!-- MAIN -->
+    <main class="container">
+
+        <div class="page-header">
+
+            <h1>Academic Details</h1>
+
+            <p>
+                Add and manage your semester-wise academic performance.
+            </p>
+
+        </div>
+
+
+        <!-- INFO -->
+        <section class="info-card">
+
+            <div class="info-icon">
+                🎓
+            </div>
+
+            <div>
+
+                <h2 id="studentName">
+                    Academic Record
+                </h2>
+
+                <p>
+                    Keep your CGPA, attendance, arrears and performance information updated.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <div
+            id="message"
+            class="message"
+        ></div>
+
+
+        <!-- ACADEMIC RECORDS -->
+        <section class="card">
+
+            <div class="card-title">
+                Semester-wise Performance
+            </div>
+
+            <div class="card-description">
+                Add your academic details for each completed semester.
+            </div>
+
+
+            <div id="academicList"></div>
+
+
+            <div id="emptyState" class="empty-state">
+
+                <div class="empty-icon">
+                    📚
+                </div>
+
+                <h3>
+                    No academic records yet
+                </h3>
+
+                <p>
+                    Click "Add Semester" to enter your academic details.
+                </p>
+
+            </div>
+
+
+            <button
+                class="add-btn"
+                onclick="addSemester()"
+            >
+                + Add Semester
+            </button>
+
+        </section>
+
+
+        <!-- ACTIONS -->
+        <div class="actions">
+
+            <button
+                class="btn btn-secondary"
+                onclick="goToDashboard()"
+            >
+                Cancel
+            </button>
+
+            <button
+                class="btn btn-primary"
+                id="saveBtn"
+                onclick="saveAcademicDetails()"
+            >
+                Save Academic Details
+            </button>
+
+        </div>
+
+    </main>
+
+
+    <script>
+
+        const studentId =
+            localStorage.getItem("studentId");
+
+
+        // Student must be logged in
+        if (!studentId) {
+            window.location.href = "/";
+        }
+
+
+        let academicData = [];
+
+
+        // Show message
+        function showMessage(text, type) {
+
+            const message =
+                document.getElementById("message");
+
+            message.textContent = text;
+
+            message.className =
+                "message " + type;
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        }
+
+
+        // Create academic row
+        function createAcademicRow(data = {}) {
+
+            const row =
+                document.createElement("div");
+
+            row.className =
+                "semester-row";
+
+
+            row.innerHTML = `
+
+                <div class="field">
+
+                    <label>Semester</label>
+
+                    <select class="semester">
+
+                        <option value="">
+                            Select
+                        </option>
+
+                        <option value="Semester 1">
+                            Semester 1
+                        </option>
+
+                        <option value="Semester 2">
+                            Semester 2
+                        </option>
+
+                        <option value="Semester 3">
+                            Semester 3
+                        </option>
+
+                        <option value="Semester 4">
+                            Semester 4
+                        </option>
+
+                        <option value="Semester 5">
+                            Semester 5
+                        </option>
+
+                        <option value="Semester 6">
+                            Semester 6
+                        </option>
+
+                        <option value="Semester 7">
+                            Semester 7
+                        </option>
+
+                        <option value="Semester 8">
+                            Semester 8
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>CGPA</label>
+
+                    <input
+                        type="number"
+                        class="cgpa"
+                        min="0"
+                        max="10"
+                        step="0.01"
+                        placeholder="0 - 10"
+                    >
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>Attendance (%)</label>
+
+                    <input
+                        type="number"
+                        class="attendance"
+                        min="0"
+                        max="100"
+                        step="0.1"
+                        placeholder="0 - 100"
+                    >
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>Arrears</label>
+
+                    <input
+                        type="number"
+                        class="arrears"
+                        min="0"
+                        step="1"
+                        placeholder="0"
+                    >
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>Performance</label>
+
+                    <select class="performance">
+
+                        <option value="">
+                            Select Performance
+                        </option>
+
+                        <option value="Excellent">
+                            Excellent
+                        </option>
+
+                        <option value="Very Good">
+                            Very Good
+                        </option>
+
+                        <option value="Good">
+                            Good
+                        </option>
+
+                        <option value="Average">
+                            Average
+                        </option>
+
+                        <option value="Needs Improvement">
+                            Needs Improvement
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="remove-btn"
+                    onclick="removeSemester(this)"
+                >
+                    Remove
+                </button>
+
+            `;
+
+
+            // Set existing values
+            row.querySelector(".semester").value =
+                data.semester || "";
+
+            row.querySelector(".cgpa").value =
+                data.cgpa ?? "";
+
+            row.querySelector(".attendance").value =
+                data.attendance ?? "";
+
+            row.querySelector(".arrears").value =
+                data.arrears ?? 0;
+
+            row.querySelector(".performance").value =
+                data.performance || "";
+
+
+            return row;
+
+        }
+
+
+        // Render academic records
+        function renderAcademicData() {
+
+            const list =
+                document.getElementById(
+                    "academicList"
+                );
+
+            const empty =
+                document.getElementById(
+                    "emptyState"
+                );
+
+
+            list.innerHTML = "";
+
+
+            if (
+                !academicData ||
+                academicData.length === 0
+            ) {
+
+                empty.style.display =
+                    "block";
+
+                return;
+
+            }
+
+
+            empty.style.display =
+                "none";
+
+
+            academicData.forEach(item => {
+
+                list.appendChild(
+                    createAcademicRow(item)
+                );
+
+            });
+
+        }
+
+
+        // Add new semester
+        function addSemester() {
+
+            const empty =
+                document.getElementById(
+                    "emptyState"
+                );
+
+            empty.style.display =
+                "none";
+
+
+            const list =
+                document.getElementById(
+                    "academicList"
+                );
+
+
+            list.appendChild(
+                createAcademicRow()
+            );
+
+        }
+
+
+        // Remove semester
+        function removeSemester(button) {
+
+            const row =
+                button.closest(
+                    ".semester-row"
+                );
+
+            row.remove();
+
+
+            const list =
+                document.getElementById(
+                    "academicList"
+                );
+
+
+            if (list.children.length === 0) {
+
+                document.getElementById(
+                    "emptyState"
+                ).style.display =
+                    "block";
+
+            }
+
+        }
+
+
+        // Collect rows
+        function collectAcademicData() {
+
+            const rows =
+                document.querySelectorAll(
+                    ".semester-row"
+                );
+
+
+            const academics = [];
+
+
+            rows.forEach(row => {
+
+                const semester =
+                    row.querySelector(
+                        ".semester"
+                    ).value;
+
+
+                const cgpaValue =
+                    row.querySelector(
+                        ".cgpa"
+                    ).value;
+
+
+                const attendanceValue =
+                    row.querySelector(
+                        ".attendance"
+                    ).value;
+
+
+                const arrearsValue =
+                    row.querySelector(
+                        ".arrears"
+                    ).value;
+
+
+                const performance =
+                    row.querySelector(
+                        ".performance"
+                    ).value;
+
+
+                // Ignore completely empty rows
+                if (
+                    !semester &&
+                    !cgpaValue &&
+                    !attendanceValue &&
+                    !arrearsValue &&
+                    !performance
+                ) {
+                    return;
+                }
+
+
+                academics.push({
+
+                    semester: semester,
+
+                    cgpa:
+                        cgpaValue === ""
+                            ? null
+                            : Number(cgpaValue),
+
+                    attendance:
+                        attendanceValue === ""
+                            ? null
+                            : Number(attendanceValue),
+
+                    arrears:
+                        arrearsValue === ""
+                            ? 0
+                            : Number(arrearsValue),
+
+                    performance:
+                        performance
+
+                });
+
+            });
+
+
+            return academics;
+
+        }
+
+
+        // Validate academic data
+        function validateAcademicData(academics) {
+
+            const semesters =
+                new Set();
+
+
+            for (
+                const academic of academics
+            ) {
+
+                if (!academic.semester) {
+
+                    return "Please select a semester for every academic record.";
+
+                }
+
+
+                if (
+                    semesters.has(
+                        academic.semester
+                    )
+                ) {
+
+                    return (
+                        academic.semester +
+                        " is added more than once."
+                    );
+
+                }
+
+
+                semesters.add(
+                    academic.semester
+                );
+
+
+                if (
+                    academic.cgpa !== null &&
+                    (
+                        academic.cgpa < 0 ||
+                        academic.cgpa > 10
+                    )
+                ) {
+
+                    return "CGPA must be between 0 and 10.";
+
+                }
+
+
+                if (
+                    academic.attendance !== null &&
+                    (
+                        academic.attendance < 0 ||
+                        academic.attendance > 100
+                    )
+                ) {
+
+                    return "Attendance must be between 0 and 100.";
+
+                }
+
+
+                if (
+                    academic.arrears < 0
+                ) {
+
+                    return "Arrears cannot be negative.";
+
+                }
+
+            }
+
+
+            return null;
+
+        }
+
+
+        // Save academic details
+        async function saveAcademicDetails() {
+
+            const saveBtn =
+                document.getElementById(
+                    "saveBtn"
+                );
+
+
+            const academics =
+                collectAcademicData();
+
+
+            const validationError =
+                validateAcademicData(
+                    academics
+                );
+
+
+            if (validationError) {
+
+                showMessage(
+                    validationError,
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            saveBtn.disabled = true;
+
+            saveBtn.textContent =
+                "Saving...";
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        `/api/student/me/${studentId}`,
+                        {
+                            method: "PUT",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify({
+                                    academics:
+                                        academics
+                                })
+                        }
+                    );
+
+
+                const result =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        result.message ||
+                        "Unable to save academic details."
+                    );
+
+                }
+
+
+                showMessage(
+                    "Academic details saved successfully!",
+                    "success"
+                );
+
+
+                saveBtn.textContent =
+                    "Saved ✓";
+
+
+                setTimeout(() => {
+
+                    window.location.href =
+                        "/pages/student-dashboard.html";
+
+                }, 1000);
+
+            }
+            catch (error) {
+
+                console.error(error);
+
+                showMessage(
+                    error.message ||
+                    "Something went wrong while saving.",
+                    "error"
+                );
+
+
+                saveBtn.disabled = false;
+
+                saveBtn.textContent =
+                    "Save Academic Details";
+
+            }
+
+        }
+
+
+        // Load student data
+        async function loadStudent() {
+
+            try {
+
+                const response =
+                    await fetch(
+                        `/api/student/me/${studentId}`
+                    );
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Unable to load student details."
+                    );
+
+                }
+
+
+                const student =
+                    await response.json();
+
+
+                document.getElementById(
+                    "studentName"
+                ).textContent =
+                    student.name
+                    ? `${student.name}'s Academic Record`
+                    : "Academic Record";
+
+
+                document.getElementById(
+                    "navName"
+                ).textContent =
+                    student.name ||
+                    "Student";
+
+
+                academicData =
+                    student.academics || [];
+
+
+                renderAcademicData();
+
+            }
+            catch (error) {
+
+                console.error(error);
+
+                showMessage(
+                    "Unable to load your academic details. Please try again.",
+                    "error"
+                );
+
+            }
+
+        }
+
+
+        // Dashboard
+        function goToDashboard() {
+
+            window.location.href =
+                "/pages/student-dashboard.html";
+
+        }
+
+
+        // Logout
+        function logout() {
+
+            localStorage.removeItem(
+                "studentId"
+            );
+
+            window.location.href = "/";
+
+        }
+
+
+        // Start
+        loadStudent();
+
+    </script>
+
+</body>
+</html>
