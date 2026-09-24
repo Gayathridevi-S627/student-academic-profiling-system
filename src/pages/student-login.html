@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Login</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f3f6fb;
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 420px;
+
+            background: white;
+
+            padding: 35px;
+
+            border-radius: 12px;
+
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #3157d5;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+
+            margin-top: 15px;
+            margin-bottom: 6px;
+
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+
+            padding: 12px;
+
+            border: 1px solid #ccd2dd;
+
+            border-radius: 6px;
+
+            font-size: 15px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #3157d5;
+        }
+
+        /* Password field */
+
+        .password-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .password-container input {
+            padding-right: 45px;
+        }
+
+        /* Eye button */
+
+        .eye-button {
+            position: absolute;
+
+            right: 10px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            width: 30px;
+            height: 30px;
+
+            padding: 0;
+            margin: 0;
+
+            border: none;
+
+            background: transparent;
+
+            color: #666;
+
+            cursor: pointer;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .eye-button:hover {
+            background: transparent;
+            color: #3157d5;
+        }
+
+        .eye-button svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Login button */
+
+        .login-button {
+            width: 100%;
+
+            padding: 12px;
+
+            margin-top: 22px;
+
+            background: #3157d5;
+
+            color: white;
+
+            border: none;
+
+            border-radius: 6px;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .login-button:hover {
+            background: #2445b0;
+        }
+
+        #message {
+            text-align: center;
+
+            margin-top: 15px;
+
+            min-height: 20px;
+        }
+
+        .register-link {
+            text-align: center;
+
+            margin-top: 20px;
+        }
+
+        .register-link a {
+            color: #3157d5;
+
+            text-decoration: none;
+
+            font-weight: bold;
+        }
+
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <div class="login-container">
+
+        <h1>Student Login</h1>
+
+        <p class="subtitle">
+            Login to access your profile
+        </p>
+
+
+        <form id="loginForm">
+
+            <!-- Email -->
+
+            <label for="email">
+                Email
+            </label>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Enter your email"
+                required
+            >
+
+
+            <!-- Password -->
+
+            <label for="password">
+                Password
+            </label>
+
+            <div class="password-container">
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Enter your password"
+                    required
+                >
+
+
+                <button
+                    type="button"
+                    id="togglePassword"
+                    class="eye-button"
+                    aria-label="Show password"
+                >
+
+                    <!-- Eye icon -->
+
+                    <svg
+                        id="eyeIcon"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+
+                        <path
+                            d="M2 12s3.5-7 10-7
+                               10 7 10 7
+                               -3.5 7-10 7
+                               -10-7-10-7z"
+                        />
+
+                        <circle
+                            cx="12"
+                            cy="12"
+                            r="3"
+                        />
+
+                    </svg>
+
+                </button>
+
+            </div>
+
+
+            <!-- Login -->
+
+            <button
+                type="submit"
+                class="login-button"
+            >
+                Login
+            </button>
+
+        </form>
+
+
+        <!-- Message -->
+
+        <p id="message"></p>
+
+
+        <!-- Register -->
+
+        <div class="register-link">
+
+            Don't have an account?
+
+            <a href="/pages/student-register.html">
+                Register
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        const form =
+            document.getElementById("loginForm");
+
+        const message =
+            document.getElementById("message");
+
+        const password =
+            document.getElementById("password");
+
+        const togglePassword =
+            document.getElementById("togglePassword");
+
+        const eyeIcon =
+            document.getElementById("eyeIcon");
+
+
+        /*
+         * SHOW / HIDE PASSWORD
+         */
+
+        togglePassword.addEventListener(
+            "click",
+            () => {
+
+                if (password.type === "password") {
+
+                    password.type = "text";
+
+                    togglePassword.setAttribute(
+                        "aria-label",
+                        "Hide password"
+                    );
+
+                    /*
+                     * Eye with slash
+                     */
+
+                    eyeIcon.innerHTML = `
+                        <path
+                            d="M3 3l18 18"
+                        />
+
+                        <path
+                            d="M10.6 10.6
+                               a2 2 0 0 0
+                               2.8 2.8"
+                        />
+
+                        <path
+                            d="M9.9 5.1
+                               A10.7 10.7 0 0 1
+                               12 5
+                               c6.5 0
+                               10 7
+                               10 7
+                               a18.4 18.4 0 0 1
+                               -3.1 3.8"
+                        />
+
+                        <path
+                            d="M6.6 6.6
+                               C3.7 8.7 2 12
+                               2 12
+                               s3.5 7 10 7
+                               c1.6 0 3-.4 4.3-1"
+                        />
+                    `;
+
+                } else {
+
+                    password.type = "password";
+
+                    togglePassword.setAttribute(
+                        "aria-label",
+                        "Show password"
+                    );
+
+                    /*
+                     * Normal eye
+                     */
+
+                    eyeIcon.innerHTML = `
+                        <path
+                            d="M2 12s3.5-7 10-7
+                               10 7 10 7
+                               -3.5 7-10 7
+                               -10-7-10-7z"
+                        />
+
+                        <circle
+                            cx="12"
+                            cy="12"
+                            r="3"
+                        />
+                    `;
+                }
+
+            }
+        );
+
+
+        /*
+         * LOGIN
+         */
+
+        form.addEventListener(
+            "submit",
+            async (event) => {
+
+                event.preventDefault();
+
+
+                message.textContent =
+                    "Logging in...";
+
+                message.style.color =
+                    "black";
+
+
+                const email =
+                    document.getElementById(
+                        "email"
+                    ).value;
+
+                const passwordValue =
+                    document.getElementById(
+                        "password"
+                    ).value;
+
+
+                try {
+
+                    const response =
+                        await fetch(
+                            "/api/student/login",
+                            {
+                                method: "POST",
+
+                                headers: {
+                                    "Content-Type":
+                                        "application/json"
+                                },
+
+                                body: JSON.stringify({
+                                    email: email,
+                                    password:
+                                        passwordValue
+                                })
+                            }
+                        );
+
+
+                    const data =
+                        await response.json();
+
+
+                    console.log(
+                        "LOGIN RESPONSE:",
+                        data
+                    );
+
+
+                    if (!response.ok) {
+
+                        message.textContent =
+                            data.message ||
+                            "Login failed.";
+
+                        message.style.color =
+                            "red";
+
+                        return;
+                    }
+
+
+                    /*
+                     * Save Student ID
+                     */
+
+                    localStorage.setItem(
+                        "studentId",
+                        data.studentId
+                    );
+
+
+                    console.log(
+                        "SAVED STUDENT ID:",
+                        localStorage.getItem(
+                            "studentId"
+                        )
+                    );
+
+
+                    message.textContent =
+                        "Login successful!";
+
+                    message.style.color =
+                        "green";
+
+
+                    /*
+                     * Go to Dashboard
+                     */
+
+                    setTimeout(() => {
+
+                        window.location.href =
+                            "/pages/student-dashboard.html";
+
+                    }, 500);
+
+                }
+
+
+                catch (error) {
+
+                    console.error(
+                        "LOGIN ERROR:",
+                        error
+                    );
+
+                    message.textContent =
+                        "Server connection failed.";
+
+                    message.style.color =
+                        "red";
+                }
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>

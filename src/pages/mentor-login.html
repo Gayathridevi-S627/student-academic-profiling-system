@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Mentor Login</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f3f6fb;
+            margin: 0;
+            padding: 30px 15px;
+        }
+
+        .login-box {
+
+            max-width: 420px;
+
+            margin: 70px auto;
+
+            padding: 30px;
+
+            background: white;
+
+            border-radius: 12px;
+
+            box-shadow: 0 5px 20px #0001;
+
+        }
+
+        h2 {
+
+            text-align: center;
+
+            color: #3157d5;
+
+            margin-bottom: 25px;
+
+        }
+
+        label {
+
+            display: block;
+
+            margin-top: 15px;
+
+            margin-bottom: 6px;
+
+            font-weight: bold;
+
+        }
+
+        .password-container {
+
+            position: relative;
+
+        }
+
+        input {
+
+            width: 100%;
+
+            box-sizing: border-box;
+
+            padding: 12px;
+
+            border: 1px solid #ccd2dd;
+
+            border-radius: 6px;
+
+            font-size: 15px;
+
+        }
+
+        .password-container input {
+
+            padding-right: 45px;
+
+        }
+
+        .eye-button {
+
+            position: absolute;
+
+            right: 10px;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            border: none;
+
+            background: transparent;
+
+            cursor: pointer;
+
+            padding: 5px;
+
+        }
+
+        .eye-button svg {
+
+            width: 20px;
+
+            height: 20px;
+
+        }
+
+        button.login-btn {
+
+            width: 100%;
+
+            padding: 12px;
+
+            margin-top: 22px;
+
+            background: #3157d5;
+
+            color: white;
+
+            border: none;
+
+            border-radius: 6px;
+
+            cursor: pointer;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+        }
+
+        #message {
+
+            text-align: center;
+
+            margin-top: 15px;
+
+        }
+
+        .back {
+
+            text-align: center;
+
+            margin-top: 20px;
+
+        }
+
+        .back a {
+
+            color: #3157d5;
+
+            text-decoration: none;
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div class="login-box">
+
+        <h2>Mentor Login</h2>
+
+
+        <form id="loginForm">
+
+
+            <label for="email">
+                Email
+            </label>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Enter mentor email"
+                required
+            >
+
+
+            <label for="password">
+                Password
+            </label>
+
+
+            <div class="password-container">
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Enter password"
+                    required
+                >
+
+
+                <button
+                    type="button"
+                    class="eye-button"
+                    id="eyeButton"
+                    aria-label="Show password"
+                >
+
+                    <svg
+                        id="eyeIcon"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+
+                        <path
+                            d="M2 12s3.5-7 10-7
+                            10 7 10 7-3.5 7-10 7
+                            S2 12 2 12z"
+                        />
+
+                        <circle
+                            cx="12"
+                            cy="12"
+                            r="3"
+                        />
+
+                    </svg>
+
+                </button>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="login-btn"
+            >
+                Login
+            </button>
+
+
+            <p id="message"></p>
+
+
+        </form>
+
+
+        <div class="back">
+
+            <a href="/">
+                Back to Home
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+
+        const form =
+            document.getElementById(
+                "loginForm"
+            );
+
+
+        const message =
+            document.getElementById(
+                "message"
+            );
+
+
+        const password =
+            document.getElementById(
+                "password"
+            );
+
+
+        const eyeButton =
+            document.getElementById(
+                "eyeButton"
+            );
+
+
+        // ==========================================
+        // SHOW / HIDE PASSWORD
+        // ==========================================
+
+        eyeButton.addEventListener(
+            "click",
+            () => {
+
+                if (
+                    password.type === "password"
+                ) {
+
+                    password.type = "text";
+
+                } else {
+
+                    password.type = "password";
+
+                }
+
+            }
+        );
+
+
+        // ==========================================
+        // LOGIN
+        // ==========================================
+
+        form.addEventListener(
+            "submit",
+            async (event) => {
+
+                event.preventDefault();
+
+
+                message.textContent =
+                    "Logging in...";
+
+                message.style.color =
+                    "#555";
+
+
+                try {
+
+                    const response =
+                        await fetch(
+                            "/api/mentor/login",
+                            {
+                                method: "POST",
+
+                                headers: {
+                                    "Content-Type":
+                                        "application/json"
+                                },
+
+                                body: JSON.stringify({
+
+                                    email:
+                                        document
+                                            .getElementById(
+                                                "email"
+                                            )
+                                            .value,
+
+                                    password:
+                                        password.value
+
+                                })
+
+                            }
+                        );
+
+
+                    const data =
+                        await response.json();
+
+
+                    if (!response.ok) {
+
+                        message.textContent =
+                            data.message ||
+                            "Login failed.";
+
+                        message.style.color =
+                            "red";
+
+                        return;
+
+                    }
+
+
+                    message.textContent =
+                        "Login successful!";
+
+                    message.style.color =
+                        "green";
+
+
+                    // Save mentor ID
+
+                    localStorage.setItem(
+                        "mentorId",
+                        data.mentorId
+                    );
+
+
+                    setTimeout(() => {
+
+                        window.location.href =
+                            "/pages/mentor-dashboard.html";
+
+                    }, 700);
+
+
+                } catch (error) {
+
+                    console.error(error);
+
+
+                    message.textContent =
+                        "Could not connect to the server.";
+
+                    message.style.color =
+                        "red";
+
+                }
+
+            }
+        );
+
+    </script>
+
+
+</body>
+
+</html>

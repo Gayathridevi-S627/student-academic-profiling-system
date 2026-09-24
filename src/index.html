@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Student Academic & Career Profiling System</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(
+                    circle at 10% 20%,
+                    rgba(79, 70, 229, 0.18),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 90% 80%,
+                    rgba(14, 165, 233, 0.16),
+                    transparent 30%
+                ),
+                #f5f7fb;
+            color: #172033;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            height: 76px;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid #e7eaf0;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 7%;
+            position: relative;
+            z-index: 10;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+
+            background: linear-gradient(
+                135deg,
+                #4f46e5,
+                #2563eb
+            );
+
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 21px;
+            font-weight: 700;
+
+            box-shadow:
+                0 8px 20px rgba(79, 70, 229, 0.25);
+        }
+
+        .brand-text h2 {
+            font-size: 17px;
+            color: #172033;
+            line-height: 1.2;
+        }
+
+        .brand-text span {
+            font-size: 11px;
+            color: #7a8497;
+            letter-spacing: 0.4px;
+        }
+
+        .nav-badge {
+            padding: 8px 14px;
+            background: #eef2ff;
+            color: #4338ca;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* ================= MAIN ================= */
+
+        .main {
+            min-height: calc(100vh - 76px);
+
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+
+            gap: 70px;
+            align-items: center;
+
+            max-width: 1250px;
+            margin: auto;
+            padding: 55px 6%;
+        }
+
+        /* ================= LEFT HERO ================= */
+
+        .hero {
+            padding-bottom: 20px;
+        }
+
+        .small-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            background: #eef2ff;
+            color: #4f46e5;
+
+            padding: 9px 15px;
+            border-radius: 30px;
+
+            font-size: 12px;
+            font-weight: 700;
+
+            margin-bottom: 22px;
+        }
+
+        .small-label .dot {
+            width: 7px;
+            height: 7px;
+            background: #22c55e;
+            border-radius: 50%;
+        }
+
+        .hero h1 {
+            font-size: clamp(38px, 5vw, 62px);
+            line-height: 1.08;
+            letter-spacing: -2px;
+            margin-bottom: 22px;
+            color: #111827;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(
+                90deg,
+                #4f46e5,
+                #2563eb,
+                #0891b2
+            );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-description {
+            max-width: 620px;
+
+            font-size: 17px;
+            line-height: 1.75;
+            color: #687386;
+
+            margin-bottom: 34px;
+        }
+
+        /* ================= FEATURES ================= */
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+
+            max-width: 650px;
+        }
+
+        .feature {
+            background: rgba(255, 255, 255, 0.8);
+
+            border: 1px solid #e8ebf2;
+            border-radius: 16px;
+
+            padding: 18px;
+
+            transition: 0.25s ease;
+        }
+
+        .feature:hover {
+            transform: translateY(-4px);
+
+            box-shadow:
+                0 12px 30px rgba(30, 41, 59, 0.08);
+        }
+
+        .feature-icon {
+            width: 38px;
+            height: 38px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #f0f4ff;
+            color: #4f46e5;
+
+            border-radius: 10px;
+
+            margin-bottom: 12px;
+
+            font-size: 18px;
+        }
+
+        .feature h3 {
+            font-size: 14px;
+            margin-bottom: 5px;
+            color: #273043;
+        }
+
+        .feature p {
+            font-size: 11px;
+            line-height: 1.5;
+            color: #7b8495;
+        }
+
+        /* ================= LOGIN CARD ================= */
+
+        .login-wrapper {
+            display: flex;
+            justify-content: center;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 430px;
+
+            background: rgba(255, 255, 255, 0.96);
+
+            border: 1px solid #e6e9f0;
+            border-radius: 24px;
+
+            padding: 34px;
+
+            box-shadow:
+                0 25px 60px rgba(30, 41, 59, 0.12);
+        }
+
+        .login-heading {
+            margin-bottom: 24px;
+        }
+
+        .login-heading h2 {
+            font-size: 26px;
+            color: #172033;
+            margin-bottom: 7px;
+        }
+
+        .login-heading p {
+            font-size: 13px;
+            color: #7b8495;
+        }
+
+        /* ================= ROLE SWITCH ================= */
+
+        .role-switch {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+
+            background: #f1f3f7;
+            padding: 5px;
+
+            border-radius: 13px;
+            margin-bottom: 24px;
+        }
+
+        .role-btn {
+            border: none;
+            background: transparent;
+
+            padding: 11px;
+
+            border-radius: 9px;
+
+            color: #70798a;
+            font-size: 13px;
+            font-weight: 600;
+
+            cursor: pointer;
+            transition: 0.25s;
+        }
+
+        .role-btn.active {
+            background: white;
+            color: #4f46e5;
+
+            box-shadow:
+                0 3px 10px rgba(0, 0, 0, 0.07);
+        }
+
+        /* ================= FORM ================= */
+
+        .form-group {
+            margin-bottom: 17px;
+        }
+
+        .form-group label {
+            display: block;
+
+            font-size: 12px;
+            font-weight: 600;
+
+            color: #394255;
+
+            margin-bottom: 7px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+
+            left: 14px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            color: #9aa3b3;
+            font-size: 15px;
+        }
+
+        input {
+            width: 100%;
+
+            padding: 13px 42px;
+
+            border: 1px solid #dfe3ea;
+            border-radius: 11px;
+
+            background: #fbfcfe;
+
+            color: #1f2937;
+            font-size: 13px;
+
+            outline: none;
+
+            transition: 0.2s;
+        }
+
+        input:focus {
+            border-color: #6366f1;
+
+            background: white;
+
+            box-shadow:
+                0 0 0 4px rgba(99, 102, 241, 0.09);
+        }
+
+        .password-toggle {
+            position: absolute;
+
+            right: 13px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            border: none;
+            background: transparent;
+
+            color: #8a94a6;
+
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        /* ================= LOGIN BUTTON ================= */
+
+        .login-btn {
+            width: 100%;
+
+            border: none;
+            border-radius: 11px;
+
+            padding: 14px;
+
+            background: linear-gradient(
+                135deg,
+                #4f46e5,
+                #2563eb
+            );
+
+            color: white;
+
+            font-size: 14px;
+            font-weight: 700;
+
+            cursor: pointer;
+
+            margin-top: 5px;
+
+            box-shadow:
+                0 10px 20px rgba(79, 70, 229, 0.22);
+
+            transition: 0.25s;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 14px 26px rgba(79, 70, 229, 0.3);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        /* ================= REGISTER ================= */
+
+        .register-text {
+            text-align: center;
+
+            font-size: 12px;
+            color: #7b8495;
+
+            margin-top: 22px;
+        }
+
+        .register-text a {
+            color: #4f46e5;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .register-text a:hover {
+            text-decoration: underline;
+        }
+
+        /* ================= MESSAGE ================= */
+
+        #message {
+            min-height: 20px;
+
+            margin-top: 15px;
+
+            text-align: center;
+
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* ================= SECURITY ================= */
+
+        .security-note {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 6px;
+
+            margin-top: 20px;
+
+            color: #8a94a6;
+            font-size: 10px;
+        }
+
+        /* ================= FOOTER ================= */
+
+        .footer {
+            text-align: center;
+
+            padding: 15px;
+
+            color: #9aa3b3;
+            font-size: 10px;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 950px) {
+
+            .main {
+                grid-template-columns: 1fr;
+                gap: 45px;
+
+                padding-top: 40px;
+            }
+
+            .hero {
+                text-align: center;
+            }
+
+            .hero-description {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .features {
+                margin: auto;
+            }
+
+            .login-wrapper {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .navbar {
+                padding: 0 20px;
+            }
+
+            .nav-badge {
+                display: none;
+            }
+
+            .brand-text h2 {
+                font-size: 14px;
+            }
+
+            .brand-text span {
+                font-size: 9px;
+            }
+
+            .main {
+                padding: 35px 20px;
+            }
+
+            .hero h1 {
+                font-size: 38px;
+            }
+
+            .hero-description {
+                font-size: 14px;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .login-card {
+                padding: 25px 20px;
+                border-radius: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                SP
+            </div>
+
+            <div class="brand-text">
+                <h2>Student Profiling</h2>
+                <span>Academic & Career Management</span>
+            </div>
+
+        </div>
+
+        <div class="nav-badge">
+            Academic Portal
+        </div>
+
+    </nav>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main">
+
+        <!-- LEFT SECTION -->
+
+        <section class="hero">
+
+            <div class="small-label">
+                <span class="dot"></span>
+                Smart Student Management Platform
+            </div>
+
+            <h1>
+                Track Your
+                <span>Academic Journey.</span>
+            </h1>
+
+            <p class="hero-description">
+                A centralized platform to manage student profiles,
+                academic performance, skills, interests and career
+                goals — helping students and mentors make better
+                academic decisions.
+            </p>
+
+
+            <!-- FEATURES -->
+
+            <div class="features">
+
+                <div class="feature">
+
+                    <div class="feature-icon">
+                        ◈
+                    </div>
+
+                    <h3>Academic Tracking</h3>
+
+                    <p>
+                        Monitor CGPA, attendance,
+                        arrears and semester performance.
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">
+                        ✦
+                    </div>
+
+                    <h3>Student Profile</h3>
+
+                    <p>
+                        Maintain skills, interests,
+                        strengths and personal details.
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">
+                        ◎
+                    </div>
+
+                    <h3>Career Planning</h3>
+
+                    <p>
+                        Record career goals and
+                        identify areas for improvement.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- RIGHT LOGIN SECTION -->
+
+        <section class="login-wrapper">
+
+            <div class="login-card">
+
+                <div class="login-heading">
+
+                    <h2>Welcome back</h2>
+
+                    <p>
+                        Sign in to access your academic portal.
+                    </p>
+
+                </div>
+
+
+                <!-- ROLE SWITCH -->
+
+                <div class="role-switch">
+
+                    <button
+                        type="button"
+                        class="role-btn active"
+                        id="studentRole"
+                    >
+                        Student
+                    </button>
+
+                    <button
+                        type="button"
+                        class="role-btn"
+                        id="mentorRole"
+                    >
+                        Mentor
+                    </button>
+
+                </div>
+
+
+                <!-- LOGIN FORM -->
+
+                <form id="loginForm">
+
+                    <div class="form-group">
+
+                        <label for="email">
+                            Email Address
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                ✉
+                            </span>
+
+                            <input
+                                type="email"
+                                id="email"
+                                placeholder="Enter your email"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="password">
+                            Password
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                ●
+                            </span>
+
+                            <input
+                                type="password"
+                                id="password"
+                                placeholder="Enter your password"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                id="togglePassword"
+                            >
+                                Show
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="login-btn"
+                    >
+                        Sign In
+                    </button>
+
+                </form>
+
+
+                <!-- MESSAGE -->
+
+                <div id="message"></div>
+
+
+                <!-- REGISTER -->
+
+                <div
+                    class="register-text"
+                    id="registerSection"
+                >
+                    New student?
+                    <a href="/pages/student-register.html">
+                        Create an account
+                    </a>
+                </div>
+
+
+                <!-- SECURITY -->
+
+                <div class="security-note">
+                    🔒 Secure academic portal
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <div class="footer">
+        © 2026 Student Academic & Career Profiling System
+    </div>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script>
+
+        let selectedRole = "student";
+
+
+        const studentRole =
+            document.getElementById("studentRole");
+
+        const mentorRole =
+            document.getElementById("mentorRole");
+
+        const registerSection =
+            document.getElementById("registerSection");
+
+        const loginForm =
+            document.getElementById("loginForm");
+
+        const message =
+            document.getElementById("message");
+
+        const password =
+            document.getElementById("password");
+
+        const togglePassword =
+            document.getElementById("togglePassword");
+
+
+        /* ================= ROLE SELECTION ================= */
+
+        studentRole.addEventListener(
+            "click",
+            () => {
+
+                selectedRole = "student";
+
+                studentRole.classList.add("active");
+                mentorRole.classList.remove("active");
+
+                registerSection.style.display = "block";
+
+                message.textContent = "";
+
+            }
+        );
+
+
+        mentorRole.addEventListener(
+            "click",
+            () => {
+
+                selectedRole = "mentor";
+
+                mentorRole.classList.add("active");
+                studentRole.classList.remove("active");
+
+                registerSection.style.display = "none";
+
+                message.textContent = "";
+
+            }
+        );
+
+
+        /* ================= PASSWORD SHOW/HIDE ================= */
+
+        togglePassword.addEventListener(
+            "click",
+            () => {
+
+                if (
+                    password.type === "password"
+                ) {
+
+                    password.type = "text";
+
+                    togglePassword.textContent =
+                        "Hide";
+
+                } else {
+
+                    password.type = "password";
+
+                    togglePassword.textContent =
+                        "Show";
+                }
+
+            }
+        );
+
+
+        /* ================= LOGIN ================= */
+
+        loginForm.addEventListener(
+            "submit",
+            async (event) => {
+
+                event.preventDefault();
+
+                message.textContent = "Signing in...";
+                message.style.color = "#4f46e5";
+
+
+                const email =
+                    document.getElementById("email")
+                        .value
+                        .trim();
+
+                const passwordValue =
+                    password.value;
+
+
+                const endpoint =
+                    selectedRole === "student"
+                        ? "/api/student/login"
+                        : "/api/mentor/login";
+
+
+                try {
+
+                    const response =
+                        await fetch(
+                            endpoint,
+                            {
+                                method: "POST",
+
+                                headers: {
+                                    "Content-Type":
+                                        "application/json"
+                                },
+
+                                body: JSON.stringify({
+                                    email: email,
+                                    password: passwordValue
+                                })
+                            }
+                        );
+
+
+                    const contentType =
+                        response.headers.get(
+                            "content-type"
+                        );
+
+
+                    if (
+                        !contentType ||
+                        !contentType.includes(
+                            "application/json"
+                        )
+                    ) {
+
+                        throw new Error(
+                            "Server returned an unexpected response."
+                        );
+
+                    }
+
+
+                    const data =
+                        await response.json();
+
+
+                    if (!response.ok) {
+
+                        throw new Error(
+                            data.message ||
+                            "Login failed."
+                        );
+
+                    }
+
+
+                    if (
+                        selectedRole === "student"
+                    ) {
+
+                        localStorage.setItem(
+                            "studentId",
+                            data.studentId
+                        );
+
+                        message.textContent =
+                            "Login successful. Redirecting...";
+
+                        message.style.color =
+                            "#16a34a";
+
+
+                        setTimeout(
+                            () => {
+
+                                window.location.href =
+                                    "/pages/student-dashboard.html";
+
+                            },
+                            500
+                        );
+
+                    } else {
+
+                        localStorage.setItem(
+                            "mentorId",
+                            data.mentorId
+                        );
+
+                        message.textContent =
+                            "Login successful. Redirecting...";
+
+                        message.style.color =
+                            "#16a34a";
+
+
+                        setTimeout(
+                            () => {
+
+                                window.location.href =
+                                    "/pages/mentor-dashboard.html";
+
+                            },
+                            500
+                        );
+                    }
+
+
+                } catch (error) {
+
+                    console.error(error);
+
+                    message.textContent =
+                        error.message ||
+                        "Unable to connect to the server.";
+
+                    message.style.color =
+                        "#dc2626";
+
+                }
+
+            }
+        );
+
+    </script>
+
+</body>
+</html>
